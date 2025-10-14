@@ -1,105 +1,301 @@
+Escribir un código HTML puro para hacer una factura completa y que sea funcional (que haga cálculos y permita agregar líneas dinámicamente) requeriría mucho código JavaScript (JS), ya que HTML por sí mismo no puede realizar cálculos matemáticos ni manipular el diseño dinámicamente.
+
+A continuación, te proporciono una estructura HTML completa y bien diseñada (incluyendo CSS para el estilo) con los campos que solicitas. Además, te incluyo el código JavaScript necesario para:
+
+Agregar nuevas líneas de artículos dinámicamente.
+
+Calcular automáticamente el precio total de cada línea (Cantidad * Precio Unitario).
+
+Calcular automáticamente la Base Imponible, el IVA (21%) y el Total Final.
+
+📄 Código Completo de la Factura (HTML, CSS y JavaScript)
+Guarda todo el código siguiente en un único archivo llamado, por ejemplo, factura.html.
+
+HTML
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TMV INFORMATICA - Soluciones Tecnológicas</title>
+    <title>Generador de Facturas - TMV INFORMATICA</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+            margin: 20px;
             background-color: #f4f4f4;
-            color: #333;
         }
-        header {
-            background-color: #0056b3; /* Azul corporativo */
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-        }
-        .container {
-            width: 80%;
+        .invoice-container {
+            max-width: 900px;
             margin: auto;
-            overflow: hidden;
-            padding: 20px 0;
-        }
-        .section {
             background: white;
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 30px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .section h2 {
+        h1 {
             color: #0056b3;
+            text-align: center;
             border-bottom: 2px solid #ccc;
             padding-bottom: 10px;
-            margin-top: 0;
         }
-        .image-container {
-            text-align: center;
-            margin: 20px 0;
+        .header-info, .client-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
         }
-        .image-container img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        .header-info div, .client-info div {
+            width: 48%;
         }
-        footer {
-            background-color: #333;
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        input[type="text"], input[type="date"], input[type="number"], select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+        }
+        /* Tabla de Artículos */
+        #itemsTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        #itemsTable th, #itemsTable td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        #itemsTable th {
+            background-color: #0056b3;
             color: white;
             text-align: center;
-            padding: 10px 0;
-            margin-top: 20px;
+        }
+        #itemsTable input[type="number"] {
+            width: 90%;
+            text-align: right;
+        }
+        .input-concepto {
+            width: 95%;
+        }
+        .total-row input {
+            background-color: #eee;
+        }
+        .button-add {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .button-add:hover {
+            background-color: #45a049;
+        }
+        /* Totales */
+        .invoice-totals {
+            margin-top: 30px;
+            float: right;
+            width: 40%;
+            min-width: 300px;
+        }
+        .invoice-totals div {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .invoice-totals .final-total {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #d9534f; /* Color para el total final */
+            border-top: 2px solid #0056b3;
+            margin-top: 10px;
+            padding-top: 10px !important;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>TMV INFORMATICA 💻</h1>
-        <p>Tu socio tecnológico de confianza</p>
-    </header>
+<div class="invoice-container">
+    <h1>Factura de TMV INFORMATICA 💻</h1>
 
-    <div class="container">
-        <div class="image-container">
-            <img src="ruta/a/tu/imagen.jpg" alt="Equipo de TMV INFORMATICA o componentes informáticos" width="600">
-            <p>Trabajando para ofrecerte las mejores soluciones.</p>
-        </div>
-        <div class="section">
-            <h2>Acerca de TMV INFORMATICA</h2>
-            <p>Somos una empresa dedicada a ofrecer **soluciones informáticas** integrales para particulares y negocios. En **TMV INFORMATICA**, nuestro compromiso es la calidad, la eficiencia y la innovación tecnológica.</p>
-        </div>
+    <div class="client-info">
+        <div style="width: 100%;">
+            <h2>Datos del Cliente</h2>
+            <label for="clienteNombre">Nombre del Cliente:</label>
+            <input type="text" id="clienteNombre" required>
 
-        <div class="section">
-            <h2>Nuestros Servicios Destacados</h2>
-            <ul>
-                <li>🛠️ **Mantenimiento y Reparación de Equipos:** Ponemos a punto tu hardware y software.</li>
-                <li>☁️ **Servicios en la Nube (Cloud):** Migración, gestión y seguridad de datos.</li>
-                <li>🌐 **Desarrollo Web y Presencia Digital:** Creamos la web perfecta para tu negocio.</li>
-                <li>🔒 **Ciberseguridad:** Protegemos tu información contra cualquier amenaza.</li>
-                <li>🤝 **Asesoría Informática:** Te ayudamos a elegir la mejor tecnología para tus necesidades.</li>
-            </ul>
-        </div>
+            <label for="clienteCIF">CIF / NIF:</label>
+            <input type="text" id="clienteCIF">
 
-        <div class="section">
-            <h2>Contáctanos</h2>
-            <p>¿Tienes un proyecto o necesitas soporte técnico? ¡Estamos listos para ayudarte!</p>
-            <p>📧 **Email:** info@tmvinfrmatica.com</p>
-            <p>📞 **Teléfono:** (957) 123-4567</p>
+            <label for="clienteDireccion">Dirección:</label>
+            <input type="text" id="clienteDireccion">
+            
+            <div style="display: flex; gap: 10px;">
+                <div style="width: 30%;">
+                    <label for="clienteCP">Código Postal:</label>
+                    <input type="text" id="clienteCP">
+                </div>
+                <div style="width: 35%;">
+                    <label for="clienteCiudad">Ciudad:</label>
+                    <input type="text" id="clienteCiudad">
+                </div>
+                <div style="width: 35%;">
+                    <label for="clienteProvincia">Provincia:</label>
+                    <input type="text" id="clienteProvincia">
+                </div>
+            </div>
         </div>
-
     </div>
 
-    <footer>
-        <p>&copy; 2025 TMV INFORMATICA. Todos los derechos reservados.</p>
-    </footer>
+    <div class="header-info">
+        <div>
+            <label for="facturaNumero">Número de Factura:</label>
+            <input type="text" id="facturaNumero" value="FAC-001" required>
+        </div>
+        <div>
+            <label for="facturaFecha">Fecha de Factura:</label>
+            <input type="date" id="facturaFecha" value="<?php echo date('Y-m-d'); ?>" required>
+        </div>
+        <div>
+            <label for="formaPago">Forma de Pago:</label>
+            <select id="formaPago">
+                <option value="contado">Al Contado</option>
+                <option value="pendiente">Pendiente</option>
+                <option value="parcial">Parcial</option>
+            </select>
+        </div>
+    </div>
+
+    <h2>Detalle de Servicios / Artículos</h2>
+    <table id="itemsTable">
+        <thead>
+            <tr>
+                <th style="width: 40%;">Concepto</th>
+                <th style="width: 15%;">Cantidad</th>
+                <th style="width: 20%;">Precio Unidad (€)</th>
+                <th style="width: 20%;">Total Línea (€)</th>
+                <th style="width: 5%;"></th> </tr>
+        </thead>
+        <tbody id="invoiceBody">
+            <tr class="item-row">
+                <td><input type="text" class="input-concepto" placeholder="Ej: Mantenimiento anual" required></td>
+                <td><input type="number" class="input-cantidad" value="1" min="1" oninput="calculateRow(this)"></td>
+                <td><input type="number" class="input-precio-unidad" value="100.00" min="0" step="0.01" oninput="calculateRow(this)"></td>
+                <td><input type="text" class="input-total-linea" value="100.00" readonly></td>
+                <td><button onclick="removeRow(this)">X</button></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <button class="button-add" onclick="addRow()">➕ Agregar Artículo</button>
+
+    <div class="invoice-totals">
+        <div>
+            <span>Base Imponible:</span>
+            <span id="baseImponible">0.00 €</span>
+        </div>
+        <div>
+            <span>IVA (21%):</span>
+            <span id="ivaAmount">0.00 €</span>
+        </div>
+        <div class="final-total">
+            <span>TOTAL FACTURA:</span>
+            <span id="finalTotal">0.00 €</span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Variable para el IVA
+    const IVA_RATE = 0.21;
+
+    /**
+     * Calcula el total de una línea (Cantidad * Precio Unidad)
+     * y actualiza los totales generales de la factura.
+     * @param {HTMLElement} element - El campo de entrada (Cantidad o Precio) que cambió.
+     */
+    function calculateRow(element) {
+        const row = element.closest('.item-row');
+        const quantityInput = row.querySelector('.input-cantidad');
+        const priceInput = row.querySelector('.input-precio-unidad');
+        const totalInput = row.querySelector('.input-total-linea');
+
+        const quantity = parseFloat(quantityInput.value) || 0;
+        const price = parseFloat(priceInput.value) || 0;
+
+        const lineTotal = quantity * price;
+        
+        // Muestra el total de la línea
+        totalInput.value = lineTotal.toFixed(2);
+        
+        // Recalcula todos los totales de la factura
+        calculateTotals();
+    }
+
+    /**
+     * Recalcula la Base Imponible, el IVA y el Total Final de toda la factura.
+     */
+    function calculateTotals() {
+        const totalLineInputs = document.querySelectorAll('.input-total-linea');
+        let baseImponible = 0;
+
+        // Suma todos los totales de línea
+        totalLineInputs.forEach(input => {
+            baseImponible += parseFloat(input.value) || 0;
+        });
+
+        const ivaAmount = baseImponible * IVA_RATE;
+        const finalTotal = baseImponible + ivaAmount;
+
+        // Actualiza los elementos HTML
+        document.getElementById('baseImponible').textContent = baseImponible.toFixed(2) + ' €';
+        document.getElementById('ivaAmount').textContent = ivaAmount.toFixed(2) + ' €';
+        document.getElementById('finalTotal').textContent = finalTotal.toFixed(2) + ' €';
+    }
+
+    /**
+     * Agrega una nueva fila de artículo a la tabla.
+     */
+    function addRow() {
+        const tableBody = document.getElementById('invoiceBody');
+        const newRow = document.createElement('tr');
+        newRow.className = 'item-row';
+        newRow.innerHTML = `
+            <td><input type="text" class="input-concepto" placeholder="Nuevo concepto" required></td>
+            <td><input type="number" class="input-cantidad" value="1" min="1" oninput="calculateRow(this)"></td>
+            <td><input type="number" class="input-precio-unidad" value="0.00" min="0" step="0.01" oninput="calculateRow(this)"></td>
+            <td><input type="text" class="input-total-linea" value="0.00" readonly></td>
+            <td><button onclick="removeRow(this)">X</button></td>
+        `;
+        tableBody.appendChild(newRow);
+        
+        // Vuelve a calcular los totales, aunque la nueva línea sea 0
+        calculateTotals();
+    }
+    
+    /**
+     * Elimina una fila de la tabla.
+     * @param {HTMLElement} element - El botón de eliminar presionado.
+     */
+    function removeRow(element) {
+        const row = element.closest('.item-row');
+        row.remove();
+        calculateTotals();
+    }
+
+    // Inicializar los cálculos al cargar la página
+    document.addEventListener('DOMContentLoaded', calculateTotals);
+</script>
 
 </body>
 </html>
