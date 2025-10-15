@@ -1,0 +1,30 @@
+// Ejemplo usando MySQLi con sentencias preparadas
+$servername = "localhost";
+$username = "root";
+$password = "root";
+$dbname = "gestiontmv";
+
+// Conexión
+$conn = new mysqli($localhost, $root, $root, $gestiontmv);
+
+// Verificar conexión
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+
+// Preparar la consulta
+$stmt = $conn->prepare("INSERT INTO usuarios (nombre_usuario, correo_usuario) VALUES (?, ?)");
+
+// Vincular los parámetros
+$stmt->bind_param("ss", $nombre, $email); // "ss" indica que ambos son strings
+
+// Ejecutar la consulta
+if ($stmt->execute()) {
+    echo "Datos guardados exitosamente";
+} else {
+    echo "Error: " . $stmt->error;
+}
+
+// Cerrar la sentencia y la conexión
+$stmt->close();
+$conn->close();
