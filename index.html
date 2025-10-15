@@ -245,7 +245,7 @@
             row.id = 'line-' + lineCounter;
 
             row.innerHTML = `
-                <td><input type="text" name="concept" required></td>
+                <td><input type="text" name="concept" style="width: 300px; height: 50px; font-size: 18px;" required></td>
                 <td><input type="number" name="units" min="1" value="1" oninput="calculateLineTotal(${lineCounter})" required></td>
                 <td><input type="number" name="price" min="0" step="0.01" value="0.00" oninput="calculateLineTotal(${lineCounter})" required></td>
                 <td id="total-line-${lineCounter}">0.00</td>
