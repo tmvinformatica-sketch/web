@@ -85,34 +85,47 @@
 </head>
 <body>
 
-    <div id="login-container">
-        <h2>Iniciar Sesión</h2>
-        <form id="login-form">
-            <div class="input-group">
+   <div class="container">
+        <div id="loginView" class="view active">
+            <h1 style="text-align: center;">Ascceso al Sistema</h1>
+    <p style="text-align: center;">Software Facturación Electronica</p>
+            <form id="loginForm">
                 <label for="username">Usuario:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="input-group">
+                <input type="text" id="username" required>
                 <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit" id="login-button">Entrar</button>
-        </form>
-    </div>
+                <input type="password" id="password" required>
+                <button type="submit" class="btn-menu">Entrar</button>
+                <p id="loginMessage" style="color: red; text-align: center;"></p>
+            </form>
+            <h1 style="text-align: center;"></h1>
+    <p style="text-align: center;">Copyright 20025 TMV</p>
+        </div>
 
-    <div id="main-menu" style="display: none;">
-        <h2>Menú Principal</h2>
-        <button class="menu-button">Presupuestos</button>
-        <button class="menu-button">Albaranes</button>
-        <button class="menu-button">Facturas</button>
-        <button class="menu-button">Listados</button>
-        <button class="menu-button">Control de Horarios</button>
-        <button id="logout-button" class="menu-button">Salir</button>
-    </div>
+        <div id="mainMenuView" class="view">
+            <h1 style="text-align: center;">Facturación Electronica TMV</h1>
+            <center>
+            <img src="LogoTmv.jpg" alt="Tmv Informatica">    
+            </center>
+            
 
-    <script>
-        document.getElementById('login-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Evita que el formulario se envíe de la forma tradicional
+            <button class="btn-menu" onclick="showDocumentForm('budget')">Presupuestos</button>
+            <button class="btn-menu" onclick="showDocumentForm('deliveryNote')">Albaranes</button>
+            <button class="btn-menu" onclick="showDocumentForm('invoice')">Facturas</button>
+            <button class="btn-menu" onclick="showDocumentForm('invoice')">Clientes</button>
+            <button class="btn-menu" onclick="showView('listView')">Control Horario</button>
+            <button class="btn-menu" onclick="showView('listView')">Listados</button>
+        </div>
+
+        
+            
+            
+
+        <div id="listView" class="view">
+            <h2>Listados</h2>
+            <p>Opción de ver listados.</p>
+            <button class="btn-menu" onclick="showView('mainMenuView')">Salir</button>
+        </div>
+    </div>
 
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
