@@ -66,7 +66,9 @@
             <button class="btn-menu" onclick="showDocumentForm('budget')">Presupuestos</button>
             <button class="btn-menu" onclick="showDocumentForm('deliveryNote')">Albaranes</button>
             <button class="btn-menu" onclick="showDocumentForm('invoice')">Facturas</button>
+            <button class="btn-menu" onclick="showDocumentForm('invoice')">Clientes</button>
             <button class="btn-menu" onclick="showView('listView')">Control Horario</button>
+            
             <button class="btn-menu" onclick="showView('listView')">Listados</button>
         </div>
 
@@ -169,12 +171,19 @@
             "cliente": "cliente"
         };
         const IVA_PERCENTAGE = 0.21;
+        
+       /* AQUI SE SELECCIONA CUANDO PULSAS EN LOS MENUS*/
         const DOC_CONFIG = {
             'budget': { title: 'Presupuesto', prefix: 'PRP', printText: 'Imprimir Presupuesto' },
+            
             'deliveryNote': { title: 'Albarán', prefix: 'ALB', printText: 'Imprimir Albarán' },
+            
             'invoice': { title: 'Factura', prefix: 'FAC', printText: 'Imprimir Factura' }
+            
         };
 
+        
+        
         // --- 2. GESTIÓN DE VISTAS (NAVEGACIÓN) ---
         function showView(viewId) {
             document.querySelectorAll('.view').forEach(view => {
