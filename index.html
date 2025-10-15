@@ -7,25 +7,24 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f0f2f5;
             margin: 0;
         }
-        #login-container, #main-menu {
-            background-color: white;
+        #login-container {
+            background-color: #fff;
             padding: 2rem;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 300px;
             text-align: center;
-        }
-        #main-menu {
-            display: none; /* Oculto por defecto */
         }
         h2 {
             margin-bottom: 1.5rem;
+            color: #333;
         }
         .input-group {
             margin-bottom: 1rem;
@@ -34,36 +33,53 @@
         label {
             display: block;
             margin-bottom: 0.5rem;
+            color: #555;
         }
-        input[type="text"], input[type="password"] {
+        input[type="text"],
+        input[type="password"] {
             width: 100%;
             padding: 0.5rem;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
         }
-        button {
+        #login-button {
+            width: 100%;
+            padding: 0.7rem;
             background-color: #007bff;
             color: white;
             border: none;
-            padding: 0.75rem 1.5rem;
             border-radius: 4px;
             cursor: pointer;
             font-size: 1rem;
-            margin: 0.5rem;
         }
-        button:hover {
+        #login-button:hover {
             background-color: #0056b3;
         }
-        #error-message {
-            color: red;
-            margin-top: 1rem;
-            display: none; /* Oculto por defecto */
+        #main-menu {
+            text-align: center;
         }
-        .menu-button-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+        .menu-button {
+            display: block;
+            width: 200px;
+            padding: 1rem;
+            margin: 0.5rem auto;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .menu-button:hover {
+            background-color: #218838;
+        }
+        #logout-button {
+            background-color: #dc3545;
+        }
+        #logout-button:hover {
+            background-color: #c82333;
         }
     </style>
 </head>
@@ -80,49 +96,52 @@
                 <label for="password">Contraseña:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit">Entrar</button>
-            <p id="error-message">Usuario o contraseña incorrectos.</p>
+            <button type="submit" id="login-button">Entrar</button>
         </form>
     </div>
 
-    <div id="main-menu">
+    <div id="main-menu" style="display: none;">
         <h2>Menú Principal</h2>
-        <div class="menu-button-container">
-            <button onclick="alert('Has pulsado Presupuestos')">Presupuestos</button>
-            <button onclick="alert('Has pulsado Albaranes')">Albaranes</button>
-            <button onclick="alert('Has pulsado Facturas')">Facturas</button>
-            <button onclick="alert('Has pulsado Listados')">Listados</button>
-            <button onclick="alert('Has pulsado Control de Horarios')">Control de Horarios</button>
-            <button onclick="location.reload()">Salir</button>
-        </div>
+        <button class="menu-button">Presupuestos</button>
+        <button class="menu-button">Albaranes</button>
+        <button class="menu-button">Facturas</button>
+        <button class="menu-button">Listados</button>
+        <button class="menu-button">Control de Horarios</button>
+        <button id="logout-button" class="menu-button">Salir</button>
     </div>
 
     <script>
-        // Seleccionamos los elementos del DOM
-        const loginForm = document.getElementById('login-form');
-        const loginContainer = document.getElementById('login-container');
-        const mainMenu = document.getElementById('main-menu');
-        const errorMessage = document.getElementById('error-message');
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita que el formulario se envíe de la forma tradicional
 
-        // Añadimos un evento al formulario para gestionar el envío
-        loginForm.addEventListener('submit', function(event) {
-            // Prevenimos el comportamiento por defecto del formulario (que recargaría la página)
-            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
 
-            // Obtenemos los valores de los campos de usuario y contraseña
-            const username = loginForm.username.value;
-            const password = loginForm.password.value;
+            // Define los usuarios y contraseñas válidos
+            const validUsers = {
+                'tmvinfo': '1234',
+                'cliente': 'cliente'
+            };
 
-            // Comprobamos si las credenciales son correctas
-            if ((username === 'tmvinfo' && password === '1234') || (username === 'cliente' && password === 'cliente')) {
-                // Si son correctas, ocultamos el formulario de login y mostramos el menú
-                loginContainer.style.display = 'none';
-                mainMenu.style.display = 'block';
-                errorMessage.style.display = 'none'; // Ocultamos el mensaje de error si estuviera visible
+            // Comprueba si el usuario existe y la contraseña es correcta
+            if (validUsers[username] && validUsers[username] === password) {
+                // Si es correcto, oculta el formulario y muestra el menú
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('main-menu').style.display = 'block';
             } else {
-                // Si son incorrectas, mostramos el mensaje de error
-                errorMessage.style.display = 'block';
+                // Si no es correcto, muestra un mensaje de error
+                alert('Usuario o contraseña incorrectos.');
             }
+        });
+
+        document.getElementById('logout-button').addEventListener('click', function() {
+            // Limpia los campos de texto
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+
+            // Oculta el menú y muestra de nuevo el formulario de login
+            document.getElementById('main-menu').style.display = 'none';
+            document.getElementById('login-container').style.display = 'block';
         });
     </script>
 
