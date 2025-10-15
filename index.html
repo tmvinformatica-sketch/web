@@ -68,11 +68,36 @@
             <button class="btn-menu" onclick="showDocumentForm('invoice')">Facturas</button>
             <button class="btn-menu" onclick="showDocumentForm('invoice')">Clientes</button>
             <button class="btn-menu" onclick="showView('listView')">Control Horario</button>
-            
             <button class="btn-menu" onclick="showView('listView')">Listados</button>
         </div>
 
-        <div id="documentFormView" class="view">
+        
+            
+            
+
+        <div id="listView" class="view">
+            <h2>Listados</h2>
+            <p>Opción de ver listados.</p>
+            <button class="btn-menu" onclick="showView('mainMenuView')">Salir</button>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. CONFIGURACIÓN DE USUARIOS y CONSTANTES ---
+        const USERS = {
+            "tmvinfo": "1234",
+            "cliente": "cliente"
+        };
+        const IVA_PERCENTAGE = 0.21;
+        
+       /* AQUI SE SELECCIONA CUANDO PULSAS EN LOS MENUS*/
+        const DOC_CONFIG = {
+            'budget': { title: 'Presupuesto', prefix: 'PRP', printText: 'Imprimir Presupuesto' },
+            
+            'deliveryNote': { title: 'Albarán', prefix: 'ALB', printText: 'Imprimir Albarán' },
+         /* --------------------------------------------------------------- FACTURA -------------------------------------------------------------*/   
+            'invoice': { title: 'Factura', prefix: 'FAC', printText: 'Imprimir Factura'
+              <div id="documentFormView" class="view">
             <h2 id="documentTitle"></h2>
 
             
@@ -124,8 +149,7 @@
                 <div class="form-group">
                     <input type="text" id="cli_province" placeholder="Provincia">
                 </div>
-            </div>
-            
+            </div> 
             <h3>Líneas de Concepto</h3>
             <table id="conceptTable">
                 <thead>
@@ -155,31 +179,10 @@
             <button class="btn-action btn-secondary" onclick="alert('Funcionalidad de Guardar no implementada')">Guardar Documento</button>
             <button class="btn-action btn-secondary" onclick="alert('Funcionalidad de Convertir a PDF no implementada')">Convertir a PDF</button>
             <button class="btn-action btn-secondary" onclick="showView('mainMenuView')">Salir</button>
-        </div>
-
-        <div id="listView" class="view">
-            <h2>Listados</h2>
-            <p>Opción de ver listados.</p>
-            <button class="btn-menu" onclick="showView('mainMenuView')">Salir</button>
-        </div>
-    </div>
-
-    <script>
-        // --- 1. CONFIGURACIÓN DE USUARIOS y CONSTANTES ---
-        const USERS = {
-            "tmvinfo": "1234",
-            "cliente": "cliente"
-        };
-        const IVA_PERCENTAGE = 0.21;
-        
-       /* AQUI SE SELECCIONA CUANDO PULSAS EN LOS MENUS*/
-        const DOC_CONFIG = {
-            'budget': { title: 'Presupuesto', prefix: 'PRP', printText: 'Imprimir Presupuesto' },
+        </div>    
+                       }
             
-            'deliveryNote': { title: 'Albarán', prefix: 'ALB', printText: 'Imprimir Albarán' },
-            
-            'invoice': { title: 'Factura', prefix: 'FAC', printText: 'Imprimir Factura' }
-            
+        /* --------------------------------------------------------------------------------------------
         };
 
         
