@@ -3,159 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control de Acceso</title>
+    <title>Control de Acceso y Menú Horizontal</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f2f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            flex-direction: column;
         }
+
+        /* --- Contenedor de Login --- */
         #login-container {
             background-color: #fff;
-            padding: 2rem;
+            padding: 40px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             width: 300px;
             text-align: center;
         }
-        h2 {
-            margin-bottom: 1.5rem;
-            color: #333;
-        }
-        .input-group {
-            margin-bottom: 1rem;
-            text-align: left;
-        }
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #555;
-        }
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 0.5rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
         #login-button {
             width: 100%;
-            padding: 0.7rem;
+            padding: 12px;
             background-color: #007bff;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 18px;
+            transition: background-color 0.3s;
         }
-        #login-button:hover {
-            background-color: #0056b3;
+        #login-button:hover { background-color: #0056b3; }
+
+        /* Estilos genéricos para inputs y labels */
+        .input-group { margin-bottom: 20px; text-align: left; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #495057; }
+        input[type="text"], input[type="password"] {
+            width: 100%; padding: 10px; border: 1px solid #ced4da; border-radius: 4px; box-sizing: border-box; font-size: 16px;
         }
-        #main-menu {
-            text-align: center;
+        
+        /* --- Menú Principal Horizontal (Barra de Navegación) --- */
+        #main-menu-container {
+            width: 90%;
+            max-width: 1000px;
+            background-color: #343a40;
+            padding: 10px;
+            border-radius: 6px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            display: flex; /* Habilita el layout flexible */
+            justify-content: center; /* Centra los botones horizontalmente */
+            gap: 10px; /* Espacio entre los botones */
         }
-        .menu-button {
-            display: block;
-            width: 200px;
-            padding: 1rem;
-            margin: 0.5rem auto;
+        .menu-button, #logout-main-button {
+            padding: 10px 15px;
             background-color: #28a745;
             color: white;
-            text-decoration: none;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            flex-grow: 1; /* Permite que los botones crezcan para ocupar el espacio */
+            max-width: 150px; /* Limita un poco el ancho */
         }
-        .menu-button:hover {
-            background-color: #218838;
-        }
-        #logout-button {
+        .menu-button:hover { background-color: #218838; }
+
+        /* Botón Salir del menú principal */
+        #logout-main-button {
             background-color: #dc3545;
         }
-        #logout-button:hover {
+        #logout-main-button:hover {
             background-color: #c82333;
         }
+
+        /* --- Contenedor de Detalle/Ventana de Módulo --- */
+        #module-view {
+            width: 90%;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        #module-title {
+            color: #007bff;
+            margin-bottom: 25px;
+        }
+        #back-to-menu-button {
+            padding: 10px 30px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        #back-to-menu-button:hover { background-color: #5a6268; }
     </style>
 </head>
 <body>
 
-   <div class="container">
-        <div id="loginView" class="view active">
-            <h1 style="text-align: center;">Ascceso al Sistema</h1>
-    <p style="text-align: center;">Software Facturación Electronica</p>
-            <form id="loginForm">
+    <div id="login-container">
+        <h2>Acceso al Sistema</h2>
+        <form id="login-form">
+            <div class="input-group">
                 <label for="username">Usuario:</label>
-                <input type="text" id="username" required>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
                 <label for="password">Contraseña:</label>
-                <input type="password" id="password" required>
-                <button type="submit" class="btn-menu">Entrar</button>
-                <p id="loginMessage" style="color: red; text-align: center;"></p>
-            </form>
-            <h1 style="text-align: center;"></h1>
-    <p style="text-align: center;">Copyright 20025 TMV</p>
-        </div>
-
-        <div id="mainMenuView" class="view">
-            <h1 style="text-align: center;">Facturación Electronica TMV</h1>
-            <center>
-            <img src="LogoTmv.jpg" alt="Tmv Informatica">    
-            </center>
-            
-
-            <button class="btn-menu" onclick="showDocumentForm('budget')">Presupuestos</button>
-            <button class="btn-menu" onclick="showDocumentForm('deliveryNote')">Albaranes</button>
-            <button class="btn-menu" onclick="showDocumentForm('invoice')">Facturas</button>
-            <button class="btn-menu" onclick="showDocumentForm('invoice')">Clientes</button>
-            <button class="btn-menu" onclick="showView('listView')">Control Horario</button>
-            <button class="btn-menu" onclick="showView('listView')">Listados</button>
-        </div>
-
-        
-            
-            
-
-        <div id="listView" class="view">
-            <h2>Listados</h2>
-            <p>Opción de ver listados.</p>
-            <button class="btn-menu" onclick="showView('mainMenuView')">Salir</button>
-        </div>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" id="login-button">Entrar</button>
+        </form>
     </div>
 
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+    <div id="main-menu-container" style="display: none;">
+        <button id="btn-presupuestos" class="menu-button" data-module="Presupuestos">Presupuestos</button>
+        <button id="btn-albaranes" class="menu-button" data-module="Albaranes">Albaranes</button>
+        <button id="btn-facturas" class="menu-button" data-module="Facturas">Facturas</button>
+        <button id="btn-listados" class="menu-button" data-module="Listados">Listados</button>
+        <button id="btn-horarios" class="menu-button" data-module="Control de Horarios">Control de Horarios</button>
+        <button id="logout-main-button">Salir</button>
+    </div>
+    
+    <div id="module-view" style="display: none;">
+        <h2 id="module-title"></h2>
+        <p>Aquí se cargaría el contenido específico del módulo seleccionado.</p>
+        <button id="back-to-menu-button">Volver al Menú Principal</button>
+    </div>
 
-            // Define los usuarios y contraseñas válidos
+    <script>
+        // --- 1. Definición de Vistas ---
+        const loginView = document.getElementById('login-container');
+        const menuView = document.getElementById('main-menu-container');
+        const moduleView = document.getElementById('module-view');
+        const moduleTitle = document.getElementById('module-title');
+        
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+
+
+        // --- 2. Lógica de Navegación de Vistas ---
+        function showView(viewToShow) {
+            // Oculta todas las vistas
+            loginView.style.display = 'none';
+            menuView.style.display = 'none';
+            moduleView.style.display = 'none';
+
+            // Muestra la vista solicitada
+            viewToShow.style.display = 'flex'; // Usamos flex para el menú horizontal
+            
+            // Si es la vista de Login, mostramos solo el contenedor
+            if (viewToShow === loginView) {
+                 viewToShow.style.display = 'block';
+            }
+        }
+
+        // --- 3. Lógica de Login ---
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = usernameInput.value;
+            const password = passwordInput.value;
+
             const validUsers = {
                 'tmvinfo': '1234',
                 'cliente': 'cliente'
             };
 
-            // Comprueba si el usuario existe y la contraseña es correcta
             if (validUsers[username] && validUsers[username] === password) {
-                // Si es correcto, oculta el formulario y muestra el menú
-                document.getElementById('login-container').style.display = 'none';
-                document.getElementById('main-menu').style.display = 'block';
+                showView(menuView); // Acceso correcto: Muestra el menú horizontal
             } else {
-                // Si no es correcto, muestra un mensaje de error
-                alert('Usuario o contraseña incorrectos.');
+                alert('¡Acceso Denegado!\nUsuario o contraseña incorrectos.');
             }
         });
 
-        document.getElementById('logout-button').addEventListener('click', function() {
-            // Limpia los campos de texto
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-
-            // Oculta el menú y muestra de nuevo el formulario de login
-            document.getElementById('main-menu').style.display = 'none';
-            document.getElementById('login-container').style.display = 'block';
+        // --- 4. Lógica para el botón 'Salir' del menú principal ---
+        document.getElementById('logout-main-button').addEventListener('click', function() {
+            usernameInput.value = '';
+            passwordInput.value = '';
+            showView(loginView); // Vuelve a la pantalla de Login
         });
+
+        // --- 5. Lógica para los botones del menú (navegación a módulo) ---
+        document.querySelectorAll('.menu-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const moduleName = this.getAttribute('data-module');
+                
+                moduleTitle.textContent = moduleName; // Actualiza el título
+                showView(moduleView); // Muestra la vista del módulo
+            });
+        });
+
+        // --- 6. Lógica para el botón 'Volver al Menú Principal' ---
+        document.getElementById('back-to-menu-button').addEventListener('click', function() {
+            showView(menuView); // Vuelve al menú horizontal
+        });
+
+        // Iniciar con la vista de Login
+        showView(loginView); 
     </script>
 
 </body>
