@@ -3,286 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Sistema de Gestión</title>
     <style>
-        /* Estilos Generales y Login */
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f9; color: #333; margin: 0; padding: 0; }
-        .container { width: 90%; max-width: 1000px; margin: 20px auto; padding: 20px; background-color: #fff; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
-        #login-form { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
-        .login-box { padding: 40px; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); text-align: center; }
-        .login-box input { padding: 10px; margin: 10px 0; width: 250px; border: 1px solid #ddd; border-radius: 4px; }
-        .login-box button { background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin-top: 15px; }
-        .error-message { color: red; margin-top: 15px; font-weight: bold; }
-
-        /* Estilos de Factura */
-        #facturacion-content { display: none; }
-        h1 { color: #0056b3; text-align: center; font-size: 2em; margin-bottom: 30px; }
-        h2 { color: #0056b3; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 20px; font-size: 1.2em; }
-        .input-group { display: flex; gap: 20px; margin-bottom: 15px; }
-        .input-group > div { flex: 1; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9em; }
-        input[type="text"], input[type="date"], select, input[type="number"] { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-
-        /* Cliente y CIF en la misma línea */
-        #cliente-cif-group { display: flex; gap: 20px; margin-bottom: 15px; }
-        #cliente-cif-group > div { flex: 1; }
-
-        /* Artículos */
-        #articulos-container { margin-top: 20px; }
-        .articulo-row { display: grid; grid-template-columns: 3fr 1fr 1fr 1fr 0.5fr; gap: 10px; align-items: center; margin-bottom: 8px; padding: 5px 8px; border-bottom: 1px dashed #eee; }
-        .articulo-row.header { font-weight: bold; background-color: #eaf2ff; padding: 10px 8px; border-bottom: 2px solid #0056b3; }
-        .articulo-row .total-linea { font-weight: bold; text-align: right; }
-        .delete-btn { background-color: #dc3545; color: white; border: none; padding: 5px 8px; border-radius: 4px; cursor: pointer; }
-        
-        /* Totales */
-        .totales-box { margin-top: 30px; text-align: right; border-top: 2px solid #0056b3; padding-top: 15px; }
-        .totales-row { display: flex; justify-content: flex-end; font-size: 1.1em; margin-bottom: 8px; }
-        .totales-row label { width: 150px; text-align: left; margin-right: 10px; }
-        .totales-row span { width: 180px; text-align: right; font-weight: bold; }
-        #total-final { font-size: 1.5em; color: #dc3545; font-weight: bold; }
-        
-        /* Botones de Acción */
-        .action-buttons { margin-top: 30px; text-align: center; }
-        .action-buttons button { padding: 10px 20px; margin: 0 10px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; }
-        #print-btn { background-color: #4CAF50; color: white; }
-        /* Ocultar elementos de control al imprimir */
-        @media print {
-            .action-buttons, .delete-btn, .add-articulo-form, h2:nth-of-type(3) { display: none; }
-            .container { box-shadow: none; border: none; }
-            /* Ajustar diseño para impresión */
-            .articulo-row { border-bottom: 1px solid #ccc !important; }
-        }
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f9; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1, h2 { color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .view { display: none; } /* Oculta todas las vistas por defecto */
+        .view.active { display: block; } /* Muestra la vista activa */
+        .btn-menu { padding: 15px 30px; margin: 10px; font-size: 1.1em; cursor: pointer; background-color: #007bff; color: white; border: none; border-radius: 5px; transition: background-color 0.3s; }
+        .btn-menu:hover { background-color: #0056b3; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="number"], input[type="password"] { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .btn-action { padding: 10px 20px; margin-right: 10px; cursor: pointer; border: none; border-radius: 4px; color: white; }
+        .btn-primary { background-color: #28a745; }
+        .btn-primary:hover { background-color: #1e7e34; }
+        .btn-secondary { background-color: #6c757d; }
+        .btn-secondary:hover { background-color: #5a6268; }
+        .total-row { font-weight: bold; background-color: #e9ecef; }
+        #loginForm { display: flex; flex-direction: column; gap: 10px; max-width: 300px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px; }
     </style>
 </head>
 <body>
 
-    <div id="login-form">
-        <div class="login-box">
-            <h2>🔒 Acceso al Software</h2>
-            <input type="text" id="username" placeholder="Usuario" required>
-            <input type="password" id="password" placeholder="Contraseña" required>
-            <button onclick="checkCredentials()">Acceder</button>
-            <p id="error-msg" class="error-message"></p>
-        </div>
-    </div>
-
-    <div id="facturacion-content" class="container">
-      
-        
-        <p style="text-align: center; font-size: 1.5em; font-weight: bold;">F A C T U R A</p>
-
-        <h2>Datos Comerciales</h2>
-        <div id="cliente-cif-group">
-            <div><label for="cliente-nombre">Nombre del Cliente:</label><input type="text" id="cliente-nombre" required></div>
-            <div><label for="cliente-cif">CIF:</label><input type="text" id="cliente-cif" required></div>
-        </div>
-        <div class="input-group">
-            <div><label for="cliente-direccion">Dirección:</label><input type="text" id="cliente-direccion" required></div>
-            <div><label for="cliente-cp">Código Postal:</label><input type="text" id="cliente-cp" required></div>
-            <div><label for="cliente-ciudad">Ciudad:</label><input type="text" id="cliente-ciudad" required></div>
-            <div><label for="cliente-provincia">Provincia:</label><input type="text" id="cliente-provincia" required></div>
+    <div class="container">
+        <div id="loginView" class="view active">
+            <h1>Acceso al Sistema</h1>
+            <form id="loginForm">
+                <label for="username">Usuario:</label>
+                <input type="text" id="username" required>
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" required>
+                <button type="submit" class="btn-menu">Entrar</button>
+                <p id="loginMessage" style="color: red; text-align: center;"></p>
+            </form>
         </div>
 
-        <h2>Datos de Facturación</h2>
-        <div class="input-group">
-            <div><label for="factura-fecha">Fecha:</label><input type="date" id="factura-fecha" required></div>
-            <div><label for="factura-numero">Nº de Factura:</label><input type="text" id="factura-numero" value="F-2025-0001" required></div>
-            <div>
-                <label for="factura-pago">Forma de Pago:</label>
-                <select id="factura-pago" required>
-                    <option value="contado">Al Contado</option>
-                    <option value="pendiente">Pendiente</option>
-                    <option value="parcial">Parcial</option>
-                </select>
-            </div>
-        </div>
-        
-        <h2>Líneas de Artículos</h2>
-        <div id="articulos-container">
-            <div class="articulo-row header">
-                <span>Concepto del Artículo</span>
-                <span>Cantidad</span>
-                <span>Precio por Unidad</span>
-                <span style="text-align: right;">Total Artículo</span>
-                <span></span>
-            </div>
-            </div>
-
-        <div class="add-articulo-form">
-            <h3>Añadir Artículo</h3>
-            <div class="input-group">
-                <div><label for="articulo-concepto">Concepto:</label><input type="text" id="articulo-concepto"></div>
-                <div><label for="articulo-cantidad">Cantidad:</label><input type="number" id="articulo-cantidad" value="0" min="0"></div>
-                <div><label for="articulo-precio">Precio Unidad:</label><input type="number" id="articulo-precio" value="0.00" step="0.01" min="0"></div>
-                <div style="flex-basis: 100px; max-width: 100px;"><label>&nbsp;</label><button style="background-color: #4CAF50; color: white; width: 100%; padding: 8px;" onclick="addArticulo()">Añadir</button></div>
-            </div>
+        <div id="mainMenuView" class="view">
+            <h1>Menú Principal</h1>
+            <button class="btn-menu" onclick="showView('budgetFormView')">Presupuestos</button>
+            <button class="btn-menu" onclick="showView('deliveryNoteView')">Albaranes</button>
+            <button class="btn-menu" onclick="showView('invoiceView')">Facturas</button>
+            <button class="btn-menu" onclick="showView('listView')">Listados</button>
         </div>
 
-        <div class="totales-box">
-            <div class="totales-row">
-                <label>Base Imponible:</label>
-                <span id="base-imponible">0.00 €</span>
-            </div>
-            <div class="totales-row">
-                <label>IVA (21%):</label>
-                <span id="iva-calculado">0.00 €</span>
-            </div>
-            <div class="totales-row" style="border-top: 1px solid #ccc; padding-top: 5px;">
-                <label>TOTAL FACTURA:</label>
-                <span id="total-final">0.00 €</span>
-            </div>
+        <div id="budgetFormView" class="view">
+            <h2>Crear Presupuesto</h2>
+
+            <h3>Datos del Cliente</h3>
+            <div class="form-group"><label>Nombre:</label><input type="text" id="cli_name"></div>
+            <div class="form-group"><label>CIF:</label><input type="text" id="cli_cif"></div>
+            <div class="form-group"><label>Dirección:</label><input type="text" id="cli_address"></div>
+            <div class="form-group"><label>Código Postal:</label><input type="text" id="cli_zip"></div>
+            <div class="form-group"><label>Población:</label><input type="text" id="cli_city"></div>
+            <div class="form-group"><label>Provincia:</label><input type="text" id="cli_province"></div>
+
+            <h3>Líneas de Concepto</h3>
+            <table id="conceptTable">
+                <thead>
+                    <tr>
+                        <th>Concepto</th>
+                        <th>Unidades</th>
+                        <th>Precio Unidad (€)</th>
+                        <th>Total Línea (€)</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+            <br>
+            <button class="btn-action btn-secondary" onclick="addLine()">Añadir Línea</button>
+
+            <h3>Totales</h3>
+            <table>
+                <tr class="total-row"><td>Base Imponible (100%)</td><td id="base_imponible_display">0.00 €</td></tr>
+                <tr class="total-row"><td>IVA (21%)</td><td id="iva_display">0.00 €</td></tr>
+                <tr class="total-row"><td>TOTAL (+ IVA)</td><td id="total_final_display">0.00 €</td></tr>
+            </table>
+            <br>
+
+            <button class="btn-action btn-primary" onclick="window.print()">Imprimir Presupuesto</button>
+            <button class="btn-action btn-secondary" onclick="alert('Funcionalidad de Guardar no implementada')">Guardar Presupuesto</button>
+            <button class="btn-action btn-secondary" onclick="alert('Funcionalidad de Convertir a PDF no implementada')">Convertir a PDF</button>
+            <button class="btn-action btn-secondary" onclick="showView('mainMenuView')">Salir</button>
         </div>
-        
-        <div class="action-buttons">
-            <p>
-               
-            </p>
-            <button id="print-btn" onclick="imprimirFactura()">🖨️ Imprimir Factura / Guardar PDF</button>
-            <button id="view-saved-btn" disabled title="Requiere código de servidor (Backend)">📂 Ver Facturas Guardadas</button>
+
+        <div id="deliveryNoteView" class="view">
+            <h2>Gestión de Albaranes</h2>
+            <p>Aquí iría el formulario de Albaranes, similar al de Presupuestos.</p>
+            <button class="btn-action btn-secondary" onclick="showView('mainMenuView')">Salir</button>
         </div>
-        
+
+        <div id="invoiceView" class="view">
+            <h2>Gestión de Facturas</h2>
+            <p>Aquí iría el formulario de Facturas, similar al de Presupuestos.</p>
+            <button class="btn-action btn-secondary" onclick="showView('mainMenuView')">Salir</button>
+        </div>
+
+        <div id="listView" class="view">
+            <h2>Listados</h2>
+            <p>Opción de ver listados, no implementada en detalle.</p>
+            <button class="btn-menu" onclick="showView('mainMenuView')">Salir</button>
+        </div>
     </div>
 
     <script>
-        // -----------------------------------------------------
-        // LÓGICA DE ACCESO
-        // -----------------------------------------------------
+        // --- 1. CONFIGURACIÓN DE USUARIOS ---
+        const USERS = {
+            "tmvinfo": "1234",
+            "cliente": "cliente"
+        };
+        const IVA_PERCENTAGE = 0.21;
 
-        const VALID_CREDENTIALS = [
-            { user: "tmvinfo", pass: "1234" },
-            { user: "cliente", pass: "cliente" }
-        ];
-
-        function checkCredentials() {
-            const usernameInput = document.getElementById('username').value;
-            const passwordInput = document.getElementById('password').value;
-            const loginForm = document.getElementById('login-form');
-            const facturacionContent = document.getElementById('facturacion-content');
-            const errorMsg = document.getElementById('error-msg');
-
-            const accessGranted = VALID_CREDENTIALS.some(cred => {
-                return cred.user === usernameInput && cred.pass === passwordInput;
+        // --- 2. GESTIÓN DE VISTAS (NAVEGACIÓN) ---
+        function showView(viewId) {
+            document.querySelectorAll('.view').forEach(view => {
+                view.classList.remove('active');
             });
+            document.getElementById(viewId).classList.add('active');
+        }
 
-            if (accessGranted) {
-                loginForm.style.display = 'none';
-                facturacionContent.style.display = 'block';
-                errorMsg.textContent = '';
-                alert("¡Acceso concedido! Bienvenidos al Software de TMV INFORMATICA.");
+        // --- 3. LÓGICA DE LOGIN ---
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const message = document.getElementById('loginMessage');
+
+            if (USERS[username] === password) {
+                message.textContent = '';
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+                showView('mainMenuView');
             } else {
-                errorMsg.textContent = "❌ Error de usuario y contraseña";
+                message.textContent = 'Usuario o contraseña incorrectos.';
             }
-        }
-        
-        // -----------------------------------------------------
-        // LÓGICA DE FACTURACIÓN Y CÁLCULOS
-        // -----------------------------------------------------
+        });
 
-        let articulos = [];
-        const IVA_RATE = 0.21;
+        // --- 4. LÓGICA DE PRESUPUESTOS ---
+        const conceptTableBody = document.querySelector('#conceptTable tbody');
+        let lineCounter = 0;
 
-        // Función para añadir una línea de artículo
-        function addArticulo() {
-            const concepto = document.getElementById('articulo-concepto').value.trim();
-            const cantidad = parseFloat(document.getElementById('articulo-cantidad').value);
-            const precio = parseFloat(document.getElementById('articulo-precio').value);
+        // Función para añadir una nueva línea de concepto
+        function addLine() {
+            lineCounter++;
+            const row = conceptTableBody.insertRow();
+            row.id = 'line-' + lineCounter;
 
-            if (concepto === "" || isNaN(cantidad) || isNaN(precio) || cantidad < 0 || precio < 0) {
-                alert("Por favor, introduce un Concepto, Cantidad válida (>=0) y Precio Unitario válido (>=0).");
-                return;
-            }
-            if (cantidad === 0 && precio === 0) {
-                 alert("La cantidad y el precio no pueden ser cero al mismo tiempo, a menos que sea un concepto sin coste.");
-            }
+            row.innerHTML = `
+                <td><input type="text" name="concept" required></td>
+                <td><input type="number" name="units" min="1" value="1" oninput="calculateLineTotal(${lineCounter})" required></td>
+                <td><input type="number" name="price" min="0" step="0.01" value="0.00" oninput="calculateLineTotal(${lineCounter})" required></td>
+                <td id="total-line-${lineCounter}">0.00</td>
+                <td><button class="btn-action btn-secondary" onclick="removeLine(${lineCounter})">Eliminar</button></td>
+            `;
 
-            const total = (cantidad * precio);
-
-            const nuevoArticulo = {
-                concepto: concepto,
-                cantidad: cantidad,
-                precio: precio.toFixed(2),
-                total: total
-            };
-
-            articulos.push(nuevoArticulo);
-            renderArticulos();
-            calculateTotals();
-            
-            // Limpiar campos y resetear a 0.00
-            document.getElementById('articulo-concepto').value = '';
-            document.getElementById('articulo-cantidad').value = '0';
-            document.getElementById('articulo-precio').value = '0.00';
-            document.getElementById('articulo-concepto').focus();
+            // Calcular el total de la nueva línea inmediatamente (aunque sea 0)
+            calculateLineTotal(lineCounter);
         }
 
-        // Función para renderizar la lista de artículos en el HTML
-        function renderArticulos() {
-            const container = document.getElementById('articulos-container');
-            // Mantener la cabecera (la primera div.articulo-row) y borrar el resto
-            Array.from(container.children).forEach((child, index) => {
-                if (index > 0) { 
-                    child.remove();
-                }
-            });
+        // Función para calcular el total de una línea específica
+        function calculateLineTotal(lineId) {
+            const row = document.getElementById('line-' + lineId);
+            if (!row) return;
 
-            articulos.forEach((item, index) => {
-                const row = document.createElement('div');
-                row.className = 'articulo-row';
-                row.innerHTML = `
-                    <span>${item.concepto}</span>
-                    <span>${item.cantidad}</span>
-                    <span>${item.precio} €</span>
-                    <span class="total-linea">${item.total.toFixed(2)} €</span>
-                    <button class="delete-btn" onclick="removeArticulo(${index})" title="Eliminar línea">X</button>
-                `;
-                container.appendChild(row);
-            });
+            const unitsInput = row.querySelector('input[name="units"]');
+            const priceInput = row.querySelector('input[name="price"]');
+            const lineTotalCell = document.getElementById('total-line-' + lineId);
+
+            const units = parseFloat(unitsInput.value) || 0;
+            const price = parseFloat(priceInput.value) || 0;
+
+            const lineTotal = units * price;
+            lineTotalCell.textContent = lineTotal.toFixed(2);
+
+            calculateFinalTotals();
         }
 
-        // Función para eliminar una línea de artículo
-        function removeArticulo(index) {
-            articulos.splice(index, 1); 
-            renderArticulos();
-            calculateTotals();
+        // Función para eliminar una línea de concepto
+        function removeLine(lineId) {
+            const row = document.getElementById('line-' + lineId);
+            if (row) {
+                row.remove();
+                calculateFinalTotals();
+            }
         }
 
         // Función para calcular Base Imponible, IVA y Total Final
-        function calculateTotals() {
-            // Usar reduce para sumar todos los totales de línea
-            const baseImponible = articulos.reduce((sum, item) => sum + item.total, 0);
-            const ivaAmount = baseImponible * IVA_RATE;
+        function calculateFinalTotals() {
+            let baseImponible = 0;
+            const totalCells = document.querySelectorAll('[id^="total-line-"]');
+
+            totalCells.forEach(cell => {
+                baseImponible += parseFloat(cell.textContent) || 0;
+            });
+
+            const ivaAmount = baseImponible * IVA_PERCENTAGE;
             const totalFinal = baseImponible + ivaAmount;
 
-            document.getElementById('base-imponible').textContent = baseImponible.toFixed(2) + ' €';
-            document.getElementById('iva-calculado').textContent = ivaAmount.toFixed(2) + ' €';
-            document.getElementById('total-final').textContent = totalFinal.toFixed(2) + ' €';
+            document.getElementById('base_imponible_display').textContent = baseImponible.toFixed(2) + ' €';
+            document.getElementById('iva_display').textContent = ivaAmount.toFixed(2) + ' €';
+            document.getElementById('total_final_display').textContent = totalFinal.toFixed(2) + ' €';
         }
 
-        // -----------------------------------------------------
-        // LÓGICA DE IMPRESIÓN / GUARDADO PDF (Navegador)
-        // -----------------------------------------------------
-
-        function imprimirFactura() {
-            // Muestra el diálogo de impresión del navegador.
-            // El usuario puede seleccionar "Imprimir" o "Guardar como PDF".
-            window.print();
-        }
-
-
-        // Establecer la fecha actual por defecto y valores iniciales
-        document.addEventListener('DOMContentLoaded', (event) => {
-            // Fecha
-            const today = new Date();
-            const yyyy = today.getFullYear();
-            let mm = today.getMonth() + 1;
-            let dd = today.getDate();
-
-            if (dd < 10) dd = '0' + dd;
-            if (mm < 10) mm = '0' + mm;
-
-            document.getElementById('factura-fecha').value = yyyy + '-' + mm + '-' + dd;
-        });
-
+        // Inicializar con la primera línea de concepto al cargar la vista
+        window.onload = addLine; // Añade una línea al cargar la página
     </script>
 
 </body>
