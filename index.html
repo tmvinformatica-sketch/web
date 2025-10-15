@@ -65,6 +65,20 @@
             <div><label for="cliente-ciudad">Ciudad:</label><input type="text" id="cliente-ciudad" required></div>
             <div><label for="cliente-provincia">Provincia:</label><input type="text" id="cliente-provincia" required></div>
         </div>
+            <h2>Datos de Facturación</h2>
+        <div class="input-group">
+            <div><label for="factura-fecha">Fecha:</label><input type="date" id="factura-fecha" required></div>
+            <div><label for="factura-numero">Nº de Factura:</label><input type="text" id="factura-numero" value="F-2025-0001" required></div>
+            <div>
+                <label for="factura-pago">Forma de Pago:</label>
+                <select id="factura-pago" required>
+                    <option value="contado">Al Contado</option>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="parcial">Parcial</option>
+                </select>
+            </div>
+        </div>
+
 
             <h3>Líneas de Concepto</h3>
             <table id="conceptTable">
