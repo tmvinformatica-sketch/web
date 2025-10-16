@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    
     <link rel="stylesheet" href="styles.css">
     <script src="script.js"></script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gestión</title>
@@ -51,14 +53,7 @@
         
         /* --- Menú Principal Horizontal (Barra de Navegación) --- */
         #main-menu-container {
-            width: 90%;
-            max-width: 1000px;
-            background-color: #343a40;
-            padding: 10px;
-            border-radius: 6px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-            display: flex; /* Habilita el layout flexible */
-            justify-content: center; /* Centra los botones horizontalmente */
+            width: 90%; max-width: 1000px; background-color: #343a40; padding: 10px; border-radius: 6px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); display: flex; /* Habilita el layout flexible */justify-content: center; /* Centra los botones horizontalmente */
             gap: 10px; /* Espacio entre los botones */
         }
         .menu-button, #logout-main-button {
@@ -137,17 +132,16 @@
         </center>
         <button id="btn-presupuestos" class="menu-button" data-module="Presupuestos">Presupuestos</button>
         <button id="btn-albaranes" class="menu-button" data-module="Albaranes">Albaranes</button>
-        <button onclick="CrearFacturas()">Facturas</button>
-        
+        <button onclick="crearfacturas()">Facturas</button>
         <button id="btn-listados" class="menu-button" data-module="Listados">Listados</button>
         <button id="btn-horarios" class="menu-button" data-module="Control de Horarios">Control de Horarios</button>
         <button id="logout-main-button">Salir</button>
     </div>
     
     <div id="module-view" style="display: none;">
-        <h2 id="module-title"></h2>
-        CrearFacturas()
-        // --- <button id="back-to-menu-button">Volver al Menú Principal</button>
+    <h2 id="module-title"></h2>
+    <button id="back-to-menu-button">Volver al Menú Principal</button>
+    
     </div>
 
     <script>
