@@ -1,4 +1,4 @@
-function crearfacturas()
+function crearfacturas() {
   
     <meta charset="UTF-8">
     <title>Factura Dinámica</title>
@@ -368,10 +368,8 @@ function crearfacturas()
         rellenarFechaActual();
         agregarLineaConcepto(); // Añadir una primera línea por defecto
     });
-</script>
 
-</body>
-</html>
-  
 
-)
+  }
+
+
