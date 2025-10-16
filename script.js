@@ -1,4 +1,4 @@
-function CrearFacturas()
+function crearfacturas()
   
     <meta charset="UTF-8">
     <title>Factura Dinámica</title>
