@@ -368,8 +368,8 @@ function crearfacturas() {
         rellenarFechaActual();
         agregarLineaConcepto(); // Añadir una primera línea por defecto
     });
-
-
   }
 
-
+function tomas() {
+  alert("¡La función desde script.js ha sido llamada con éxito!");
+}
