@@ -4,17 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-    
+   
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
         
     
-    
-    
 </div>
 
-    <div class="container">
+    <div id="container" class="container">
         <div class="container-form">
             <form class="sign-in">
                 <h2>Iniciar Sesión</h2>
@@ -26,7 +25,7 @@
                 </div>
                 <span>Use su correo y contraseña</span>
                 
-                <p id="login-message" class="text-center text-sm mb-4 font-semibold"></p>
+                <p id="login-message"></p>
 
                 <div class="container-input">
                     <ion-icon name="mail-outline"></ion-icon>
@@ -36,7 +35,7 @@
                     <ion-icon name="lock-closed-outline"></ion-icon>
                     <input type="password" id="passwordlog" placeholder="Contraseña" required>
                 </div>
-                <a href="#">¿Olvidaste tu contraseña?</a>
+                <a href="www.tmvinformatica.com">¿Olvidaste tu contraseña?</a>
                 <button class="button">INICIAR SESIÓN</button>
             </form>
         </div>
@@ -85,146 +84,28 @@
     </div>
 
     <div id="app-page" class="hidden">
-        <h1 class="text-5xl font-extrabold mb-4 animate-pulse">¡Bienvenidos!</h1>
-        <h2 class="text-3xl font-light mb-8 text-center">A su Factura Electrónica TMV</h2>
-        <p class="text-xl mb-12">Su sesión ha sido iniciada con éxito.</p>
-        <button id="logout-btn"
-                class="bg-tmv-green hover:bg-green-700 text-white font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
-            Cerrar Sesión
-        </button>
+        <h1 class="textomenuuno">¡Bienvenidos!</h1>
+        <h2 class="textomenudos">A su Factura Electrónica TMV</h2>
+        <button id="logout-btn" style=" position: absolute; top: 600px; left: 530px; background-color: #007bff; color: white;
+                                        padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; ">
+                Cerrrar Sesión</button>
+        <img class="logotipo" src="LogoTmv.jpg">    
+
+        <div>
+            <section id="mi-seleccion" class="botonmenu">
+                <a href="#" class="fa fa-solid fa-pencil"></a>
+                <a href="#" class="fa fa-solid fa-clipboard"></a>
+                <a href="#" class="fa fa-regular fa-file"></a>
+                <a href="#" class="fa fa-solid fa-print"></a>
+                <a href="#" class="fa fa-user-circle"></a>
+            </section>
+        </div>
+
     </div>
 
     <script src="script.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
-<!-- CÓDIGO JAVASCRIPT -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- CONSTANTES Y ELEMENTOS DEL DOM ---
-            const AUTH_KEY = 'tmv_users';
-            const container = document.getElementById('main-auth-container');
-            const appPage = document.getElementById('app-page');
-
-            // Formularios
-            const loginForm = document.querySelector('.sign-in');
-            const registerForm = document.querySelector('.sign-up');
-
-            // Botones de toggle
-            const btnSignUp = document.getElementById('btn-sign-up');
-            const btnSignIn = document.getElementById('btn-sign-in');
-            const logoutBtn = document.getElementById('logout-btn');
-
-            // Inputs de Login
-            const userLogInput = document.getElementById('usuariolog');
-            const passLogInput = document.getElementById('passwordlog');
-            const loginMessage = document.getElementById('login-message');
-
-            // Inputs de Registro
-            const nameRegInput = document.getElementById('register-name');
-            const emailRegInput = document.getElementById('register-email');
-            const passRegInput = document.getElementById('register-password');
-            const registerMessage = document.getElementById('register-message');
-
-            // --- 1. FUNCIÓN DE INICIALIZACIÓN DE USUARIOS ---
-            function initializeUsers() {
-                let users = localStorage.getItem(AUTH_KEY);
-                if (!users) {
-                    // Usuarios predefinidos requeridos
-                    const defaultUsers = {
-                        "info@tmvinformatica.com": "1234",
-                        "clientes@tmvinformatica.com": "clientes"
-                    };
-                    localStorage.setItem(AUTH_KEY, JSON.stringify(defaultUsers));
-                    console.log('Usuarios por defecto creados (LocalStorage):', defaultUsers); // Log para depuración
-                } else {
-                    console.log('Usuarios cargados (LocalStorage):', JSON.parse(users)); // Log para depuración
-                }
-            }
-            initializeUsers();
-
-            // --- 3. FUNCIÓN DE INICIO DE SESIÓN ---
-            loginForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                loginMessage.className = 'text-center text-sm mb-4 font-semibold';
-
-                const username = userLogInput.value.trim().toLowerCase();
-                const password = passLogInput.value.trim();
-
-                const usersData = JSON.parse(localStorage.getItem(AUTH_KEY) || '{}');
-
-                if (usersData[username] && usersData[username] === password) {
-                    // Éxito: Muestra la página de bienvenida
-                    
-                    loginMessage.textContent = '¡Inicio de sesión exitoso!';
-                    loginMessage.classList.add('text-tmv-green');
-                    container.classList.add('hidden'); 
-                    appPage.classList.remove('hidden');
-                    localStorage.setItem('isLoggedIn', 'true'); // Marca la sesión
-                } else {
-                    // Error
-                    loginMessage.textContent = 'Usuario o contraseña incorrectos';
-                    loginMessage.classList.add('text-red-500');
-                }
-            });
-
-            // --- 5. FUNCIÓN DE CERRAR SESIÓN ---
-            logoutBtn.addEventListener('click', () => {
-                localStorage.removeItem('isLoggedIn');
-                appPage.classList.add('hidden');
-                container.classList.remove('hidden');
-                userLogInput.value = ''; // Limpia los campos de login al cerrar
-                passLogInput.value = '';
-                loginMessage.textContent = '';
-                switchToLogin();
-            });
-
-            // --- 6. VERIFICAR SESIÓN AL CARGAR (para simular persistencia) ---
-            if (localStorage.getItem('isLoggedIn') === 'true') {
-                container.classList.add('hidden');
-                appPage.classList.remove('hidden');
-            }
-
-            // --- 4. FUNCIÓN DE REGISTRO ---
-            registerForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                registerMessage.className = 'text-center text-sm mb-4 font-semibold';
-
-                const name = nameRegInput.value.trim();
-                const email = emailRegInput.value.trim().toLowerCase();
-                const password = passRegInput.value.trim();
-
-                if (!name || !email || !password) {
-                    registerMessage.textContent = 'Todos los campos son obligatorios.';
-                    registerMessage.classList.add('text-red-500');
-                    return;
-                }
-
-                let usersData = JSON.parse(localStorage.getItem(AUTH_KEY) || '{}');
-
-                if (usersData[email]) {
-                    registerMessage.textContent = 'Error: Este email ya está registrado.';
-                    registerMessage.classList.add('text-red-500');
-                    return;
-                }
-
-                // Registro exitoso: Añadir el nuevo usuario
-                usersData[email] = password;
-                localStorage.setItem(AUTH_KEY, JSON.stringify(usersData));
-                console.log(`Nuevo usuario registrado con éxito: ${email}`); // Log para depuración
-                console.log('Total de usuarios actualizado:', usersData); // Log para depuración
-
-                registerMessage.textContent = `¡Registro exitoso para ${name}! Ahora puedes iniciar sesión.`;
-                registerMessage.classList.add('text-tmv-green');
-
-                // Limpiar campos y cambiar a la vista de Login
-                nameRegInput.value = '';
-                emailRegInput.value = '';
-                passRegInput.value = '';
-                setTimeout(switchToLogin, 1500); // Cambia a Login después de 1.5s
-            });
-        });
-    </script>
 
 </body>
 </html>

@@ -11,7 +11,9 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #F0F4F3;
+    /*background-color: #F0F4F3;*/
+    background-color: white;
+    font-size: 16px;
 }
 .container{
     width: 800px;
@@ -153,4 +155,75 @@ body{
 
 .hidden {
     display: none !important; /* Asegura que el elemento esté completamente oculto */
+}
+
+/* BOTENES MENU PRINCIPAL*/
+ .botonmenu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-80%, -50%);
+  padding: 40px;
+  min-width: 1200px;
+  display: flex;
+  justify-content: space-around;
+} 
+
+.botonmenu a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 2em;
+  background-color: tomato;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+  border-radius: 50%;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+  transition: all 0.3s ease-in-out;
+} 
+
+.botonmenu a:nth-child(2) {
+  background-color: #b83b5e;
+}
+
+.botonmenu a:nth-child(3) {
+  background-color: #222831;
+}
+
+.botonmenu a:nth-child(4) {
+  background-color: #ffc300;
+}
+
+.botonmenu a:hover {
+  box-shadow: 0 0 30px #cddc39;
+  color: #cddc39;
+}
+
+/* ********************************* */
+
+.textomenuuno {
+  position: absolute; /* Saca al h1 del flujo normal */
+  top: 100px; /* Colócalo a 150 píxeles desde la parte superior */
+  left: 10%; /* Muévelo al 50% de la izquierda */
+  transform: translateX(-50%); /* Ajusta el 50% para centrarlo horizontalmente */
+  width: 1%; /* Asegúrate de que el ancho sea completo para el centrado */
+  text-align: center; /* Centra el texto dentro del h1 */
+}
+
+.textomenudos {
+  position: absolute; /* Saca al h1 del flujo normal */
+  top: 200px; /* Colócalo a 150 píxeles desde la parte superior */
+  left: 30%; /* Muévelo al 50% de la izquierda */
+  transform: translateX(-50%); /* Ajusta el 50% para centrarlo horizontalmente */
+  width: 50%; /* Asegúrate de que el ancho sea completo para el centrado */
+  text-align: center; /* Centra el texto dentro del h1 */
+}
+
+.logotipo {
+  position: absolute;
+  top: 10px;  /* 100 píxeles desde el borde superior */
+  left: 1200px; /* 50 píxeles desde el borde izquierdo */
+  max-width: 100%;
+  height: auto; /* Ancho de la imagen */
 }
