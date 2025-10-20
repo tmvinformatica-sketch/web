@@ -227,3 +227,12 @@ body{
   max-width: 100%;
   height: auto; /* Ancho de la imagen */
 }
+
+@media(max-width:991px){
+    body{
+        padding: 30px;
+    }
+    form {
+        width: 340px;
+    }
+}
